@@ -77,7 +77,7 @@ app.http("importSongs", {
 
     } catch (error) {
       context.error("Import failed:", error);
-      return { status: 500, body: JSON.stringify({ error: "Internal server error" }) };
+      return { status: 500, body: JSON.stringify({ error: error.message, dbHost: process.env.DBHOST || "not set", dbUser: process.env.DBUSER || "not set", dbName: process.env.DBNAME || "not set" }) };
     }
   }
 });
