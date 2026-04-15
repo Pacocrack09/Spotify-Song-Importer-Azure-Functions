@@ -5,11 +5,11 @@ const ExcelJS = require("exceljs");
 const initDatabase = require("../../db/init");
 
 const dbConfig = {
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  port: parseInt(process.env.DB_PORT) || 3306,
+  host: process.env.DB_HOST || process.env.DBHOST,
+  user: process.env.DB_USER || process.env.DBUSER,
+  password: process.env.DB_PASSWORD || process.env.DBPASSWORD,
+  database: process.env.DB_NAME || process.env.DBNAME,
+  port: parseInt(process.env.DB_PORT || process.env.DBPORT) || 3306,
   ssl: { rejectUnauthorized: false }
 };
 
