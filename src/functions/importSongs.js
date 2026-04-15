@@ -77,7 +77,22 @@ app.http("importSongs", {
 
     } catch (error) {
       context.error("Import failed:", error);
-      return { status: 500, body: JSON.stringify({ error: error.message, dbHost: process.env.DBHOST || "not set", dbUser: process.env.DBUSER || "not set", dbName: process.env.DBNAME || "not set" }) };
+      return { status: 500, body: JSON.stringify({ error: error.message }) };
+    }
+  }
+});
+
+app.http("clearSongs", {
+  methods: ["DELETE"],
+  authLevel: "anonymous",
+  handler: async (request, context) => {
+    try {
+      await initDatabase(dbConfig);
+      const pool = await mysql.createPool(dbConfig);
+      await pool.query("DELETE FROM songs");
+      return { status: 200, headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message: "All songs deleted" }) };
+    } catch (error) {
+      return { status: 500, body: JSON.stringify({ error: error.message }) };
     }
   }
 });
